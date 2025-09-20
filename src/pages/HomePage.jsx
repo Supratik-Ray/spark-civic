@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { FiUser, FiMenu, FiShield, FiArrowRight, FiClock, FiCheckCircle, FiUsers, FiPlusCircle, FiFileText } from "react-icons/fi"
 import { FaBolt, FaChartBar, FaHome, FaMapMarkerAlt } from 'react-icons/fa'
@@ -8,7 +9,6 @@ import WorkingSteps from '../components/WorkingSteps'
 const HomePage = () => {
   return (
     <div className='bg-[#F3F7FC] font-sans '>
-
       {/* navbar */}
       <nav className='sticky top-0 z-10 border-b border-gray-50 bg-white'>
         <div className='px-4 sm:px-6 md:px-10 lg:px-16 py-3 flex items-center justify-between'>
