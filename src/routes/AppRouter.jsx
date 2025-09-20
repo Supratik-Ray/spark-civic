@@ -6,6 +6,8 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/report"  />
+        <Route path="/my-issues"  />
       </Routes>
     </BrowserRouter>
   );

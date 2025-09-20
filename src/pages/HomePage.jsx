@@ -4,8 +4,13 @@ import { FaBolt, FaChartBar, FaHome, FaMapMarkerAlt } from 'react-icons/fa'
 import IssuesCard from '../components/IssuesCard'
 import AdvantagesCard from '../components/AdvantagesCard'
 import WorkingSteps from '../components/WorkingSteps'
+import { NavLink } from 'react-router-dom'
 
 const HomePage = () => {
+  const navlinkStyle = "flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-gray-500 text-sm lg:text-[15px] font-medium hover:bg-blue-100 rounded-xl transition-all duration-200 ease hover:text-blue-600"
+
+  const activelinkStyle = "bg-blue-600 text-white font-bold flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-sm lg:text-[15px]  rounded-xl transition-all duration-200 ease "
+
   return (
     <div className='bg-[#F3F7FC] font-sans '>
 
@@ -20,23 +25,50 @@ const HomePage = () => {
 
           {/* navlinks */}
           <div className='hidden md:flex lg:gap-3 md:gap-2'>
-            <button className='flex items-center px-3 lg:px-4 py-1.5 bg-blue-600 gap-2 rounded-[10px] text-white text-sm lg:text-[15px] font-semibold cursor-pointer'>
+            <NavLink
+            to="/"
+            className={({isActive})=>
+              `${
+                isActive
+                  ? activelinkStyle
+                  : navlinkStyle
+              } `
+            }>
               <FaHome/>
               Home
-            </button>
-            <button className='flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-gray-500 text-sm lg:text-[15px] font-medium hover:bg-blue-100 rounded-xl transition-all duration-200 ease hover:text-blue-600'>
+            </NavLink>
+
+            <NavLink
+            to="/report"
+            className={({isActive})=>
+              `${
+                isActive
+                  ? activelinkStyle
+                  : navlinkStyle
+              } `
+            }>
               <FiPlusCircle/>
               Report Issue
-            </button>
-            <button className='flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-gray-500 text-sm lg:text-[15px] font-medium hover:bg-blue-100 rounded-xl transition-all duration-200 ease hover:text-blue-600'>
+            </NavLink>
+
+            <NavLink
+            to="/my-issues"
+            className={({isActive})=>
+              `${
+                isActive
+                  ? activelinkStyle
+                  : navlinkStyle
+              } `
+            }>
               <FiFileText/>
               My Issues
-            </button>
+            </NavLink>
           </div>
 
           {/* right buttons */}
           <div className='flex sm:gap-3 md:gap-4 lg:gap-5'>
-            <button className='hidden sm:flex items-center border-[1px] text-gray-700 border-gray-200 px-3 py-1 rounded-[10px] text-xs sm:text-sm font-semibold hover:bg-blue-100 hover:text-blue-600 transition-all duration-100 ease cursor-pointer'>
+
+            <button className='hidden sm:flex items-center border-[1px] text-gray-700 border-gray-200 px-3 py-1 rounded-[10px] text-xs sm:text-sm font-semibold hover:bg-blue-100 hover:text-blue-600 transition-all duration-100 ease cursor-pointer '>
               Switch to Admin
             </button>
             <button className='hover:bg-blue-100 hover:text-blue-600 h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-[10px] transition-all duration-100 ease cursor-pointer'>
