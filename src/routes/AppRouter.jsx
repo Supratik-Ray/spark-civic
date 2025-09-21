@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import Navbar from "../components/Navbar";
 import ReportIssuePage from "../pages/ReportIssuePage";
-import MyIssuesPage from "../pages/MyIssuesPage";
+import AllIssuesPage from "../pages/AllIssuesPage";
 
 const AppRouter = () => {
   return (
@@ -13,7 +13,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/report" element={<ReportIssuePage/>} />
-        <Route path="/my-issues" element={<MyIssuesPage/>} />
+        <Route path="/all-issues" element={<AllIssuesPage/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { use, useState } from 'react'
 import { FaHome } from 'react-icons/fa'
-import { FiFileText, FiMenu, FiPlusCircle, FiUser } from 'react-icons/fi'
+import { FiFileText, FiLogOut, FiMenu, FiPlusCircle, FiSettings, FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
-    
+  const [userOpen, setUserOpen] = useState(false)
+
   const navlinkStyle = "flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-gray-500 text-sm lg:text-[15px] font-medium hover:bg-blue-100 rounded-xl transition-all duration-200 ease hover:text-blue-600"
 
   const activelinkStyle = "bg-blue-600 text-white font-bold flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-sm lg:text-[15px]  rounded-xl transition-all duration-200 ease "
@@ -12,7 +13,7 @@ const Navbar = () => {
   return (
     <>
       {/* navbar */}
-      <nav className='sticky top-0 z-10 border-b border-gray-50 bg-white'>
+      <nav className='sticky top-0 z-10 border-b-1 border-gray-300 bg-white'>
         <div className='px-4 sm:px-6 md:px-10 lg:px-16 py-3 flex items-center justify-between'>
           {/* logo */}
           <div className='flex gap-2 items-center cursor-pointer'>
@@ -49,7 +50,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-            to="/my-issues"
+            to="/all-issues"
             className={({isActive})=>
               `${
                 isActive
@@ -58,22 +59,38 @@ const Navbar = () => {
               } `
             }>
               <FiFileText/>
-              My Issues
+              All Issues
             </NavLink>
           </div>
 
           {/* right buttons */}
-          <div className='flex sm:gap-3 md:gap-4 lg:gap-5'>
+          <div className='relative flex sm:gap-3 md:gap-4 lg:gap-5'>
 
             <button className='hidden sm:flex items-center border-[1px] text-gray-700 border-gray-200 px-3 py-1 rounded-[10px] text-xs sm:text-sm font-semibold hover:bg-blue-100 hover:text-blue-600 transition-all duration-100 ease cursor-pointer '>
               Switch to Admin
             </button>
-            <button className='hover:bg-blue-100 hover:text-blue-600 h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-[10px] transition-all duration-100 ease cursor-pointer'>
+            <button
+            onClick={()=>{
+              setUserOpen(!userOpen)
+            }}
+            className=' hover:bg-blue-100 hover:text-blue-600 h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-[10px] transition-all duration-100 ease cursor-pointer'>
               <FiUser/>
             </button>
             <button className='md:hidden hover:bg-blue-100 hover:text-blue-600 h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-[10px] transition-all duration-100 ease cursor-pointer'>
               <FiMenu/>
             </button>
+            {userOpen && (
+              <div className='absolute right-1.5 mt-11 border shadow-xl rounded-xl p-1 bg-white border-gray-200 w-3xs'>
+                <ul className=''>
+                  <li className='text-sm font-semibold px-4 rounded-lg py-2'>My Account</li>
+                  <hr className='text-gray-400 my-[1px] font-semibold opacity-60 px-4'/>
+                  <li className='flex items-center gap-3 text-sm px-4 rounded-lg py-1.5 hover:bg-blue-200 transition-all duration-200 cursor-pointer hover:text-blue-600'><FiUser/>Profile</li>
+                  <li className='flex items-center gap-3 text-sm px-4 rounded-lg py-1.5 hover:bg-blue-200 transition-all duration-200 cursor-pointer hover:text-blue-600'><FiSettings/>Settings</li>
+                  <hr className='text-gray-400 my-[1px] font-semibold opacity-60' />
+                  <li className='flex items-center gap-3 px-4 text-red-600 text-sm py-1.5 rounded-lg hover:bg-blue-200 transition-all duration-200 ease cursor-pointer hover:text-blue-600'><FiLogOut/> Log out</li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </nav>
