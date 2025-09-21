@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "../hooks/useAuth";
 import supabase from "../supabase/supabaseClient";
-import { signInUser, signOutUser, signUpUser } from "../api/authApi";
+import { signInUser, signOutUser, signUpUser } from "../supabase/api/auth";
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
