@@ -1,10 +1,21 @@
-import React, { use, useState } from 'react'
-import { FaHome } from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaHome, FaMap } from 'react-icons/fa'
 import { FiFileText, FiLogOut, FiMenu, FiPlusCircle, FiSettings, FiUser } from 'react-icons/fi'
+import { GrAnalytics } from 'react-icons/gr'
+import { MdDashboard } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   const [userOpen, setUserOpen] = useState(false)
+  const [userType, setUserType] = useState("Citizen")
+
+  const handleUsertype = ()=> {
+    if(userType === "Citizen") {
+      setUserType("Admin")
+    }else{
+      setUserType("Citizen")
+    }
+  }
 
   const navlinkStyle = "flex cursor-pointer items-center gap-2 px-3 lg:px-4 py-1.5 text-gray-500 text-sm lg:text-[15px] font-medium hover:bg-blue-100 rounded-xl transition-all duration-200 ease hover:text-blue-600"
 
@@ -21,54 +32,105 @@ const Navbar = () => {
             <h2 className='font-semibold text-[16px] sm:text-[18px]'>CivicReport</h2>
           </div>
 
-          {/* navlinks */}
-          <div className='hidden md:flex lg:gap-3 md:gap-2'>
-            <NavLink
-            to="/"
-            className={({isActive})=>
-              `${
-                isActive
-                  ? activelinkStyle
-                  : navlinkStyle
-              } `
-            }>
-              <FaHome/>
-              Home
-            </NavLink>
+          {/* citizen navlinks */}
+          {userType==="Citizen" && (
+            <div className='hidden md:flex lg:gap-3 md:gap-2'>
+              <NavLink
+              to="/"
+              className={({isActive})=>
+                `${
+                  isActive
+                    ? activelinkStyle
+                    : navlinkStyle
+                } `
+              }>
+                <FaHome/>
+                Home
+              </NavLink>
 
-            <NavLink
-            to="/report"
-            className={({isActive})=>
-              `${
-                isActive
-                  ? activelinkStyle
-                  : navlinkStyle
-              } `
-            }>
-              <FiPlusCircle/>
-              Report Issue
-            </NavLink>
+              <NavLink
+              to="/report"
+              className={({isActive})=>
+                `${
+                  isActive
+                    ? activelinkStyle
+                    : navlinkStyle
+                } `
+              }>
+                <FiPlusCircle/>
+                Report Issue
+              </NavLink>
 
-            <NavLink
-            to="/all-issues"
-            className={({isActive})=>
-              `${
-                isActive
-                  ? activelinkStyle
-                  : navlinkStyle
-              } `
-            }>
-              <FiFileText/>
-              All Issues
-            </NavLink>
-          </div>
+              <NavLink
+              to="/all-issues"
+              className={({isActive})=>
+                `${
+                  isActive
+                    ? activelinkStyle
+                    : navlinkStyle
+                } `
+              }>
+                <FiFileText/>
+                All Issues
+              </NavLink>
+            </div>
+          )}
+          
+
+          {/* admin navlinks */}
+          {userType === "Admin" && (
+            <div className='hidden md:flex lg:gap-3 md:gap-2'>
+              <NavLink
+              to="/dashboard"
+              className={({isActive})=>
+                `${
+                  isActive
+                    ? activelinkStyle
+                    : navlinkStyle
+                } `
+              }>
+                <MdDashboard/>
+                Dashboard
+              </NavLink>
+
+              <NavLink
+              to="/map-view"
+              className={({isActive})=>
+                `${
+                  isActive
+                    ? activelinkStyle
+                    : navlinkStyle
+                } `
+              }>
+                <FaMap/>
+                Map View
+              </NavLink>
+
+              <NavLink
+              to="/analytics"
+              className={({isActive})=>
+                `${
+                  isActive
+                    ? activelinkStyle
+                    : navlinkStyle
+                } `
+              }>
+                <GrAnalytics/>
+                Analytics
+              </NavLink>
+            </div>
+          )}
+          
 
           {/* right buttons */}
           <div className='relative flex sm:gap-3 md:gap-4 lg:gap-5'>
 
-            <button className='hidden sm:flex items-center border-[1px] text-gray-700 border-gray-200 px-3 py-1 rounded-[10px] text-xs sm:text-sm font-semibold hover:bg-blue-100 hover:text-blue-600 transition-all duration-100 ease cursor-pointer '>
-              Switch to Admin
+            <button
+            onClick={handleUsertype}
+            className='hidden sm:flex items-center border-[1px] text-gray-700 border-gray-200 px-3 py-1 rounded-[10px] text-xs sm:text-sm font-semibold hover:bg-blue-100 hover:text-blue-600 transition-all duration-100 ease cursor-pointer '>
+              Switch to {userType}
             </button>
+
             <button
             onClick={()=>{
               setUserOpen(!userOpen)
