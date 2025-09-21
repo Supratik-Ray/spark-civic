@@ -151,11 +151,9 @@ export const fetchIssues = async (filters = {}) => {
 // 3) FETCH ISSUE BY ID
 export const fetchIssueById = async (issueId) => {
   try {
-    const { data, error } = await supabase
-      .from("issues")
-      .select("*")
-      .eq("id", issueId)
-      .single();
+    const { data, error } = await supabase.rpc("get_issue_by_id", {
+      _id: issueId,
+    });
 
     if (error) throw error;
     return { success: true, data };
