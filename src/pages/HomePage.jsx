@@ -1,3 +1,9 @@
+import React from 'react'
+import { FiShield, FiArrowRight, FiClock, FiCheckCircle, FiUsers } from "react-icons/fi"
+import { FaBolt, FaChartBar, FaHome, FaMapMarkerAlt } from 'react-icons/fa'
+import IssuesCard from '../components/IssuesCard'
+import AdvantagesCard from '../components/AdvantagesCard'
+import WorkingSteps from '../components/WorkingSteps'
 import { useEffect } from "react";
 import {
   FiUser,
@@ -30,6 +36,7 @@ const HomePage = () => {
     getData();
   }, []);
   return (
+    <div className='bg-[#F3F7FC] font-sans '>
     <div className="bg-[#F3F7FC] font-sans ">
       {/* navbar */}
       <nav className="sticky top-0 z-10 border-b border-gray-50 bg-white">
