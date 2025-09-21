@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import {
   FiUser,
   FiMenu,
@@ -14,8 +14,21 @@ import { FaBolt, FaChartBar, FaHome, FaMapMarkerAlt } from "react-icons/fa";
 import IssuesCard from "../components/IssuesCard";
 import AdvantagesCard from "../components/AdvantagesCard";
 import WorkingSteps from "../components/WorkingSteps";
+import { fetchIssues } from "../supabase/api/issues";
 
 const HomePage = () => {
+  useEffect(() => {
+    async function getData() {
+      const result = await fetchIssues();
+      if (result.success) {
+        console.log(result.data);
+      } else {
+        console.error(result.error.message);
+      }
+    }
+
+    getData();
+  }, []);
   return (
     <div className="bg-[#F3F7FC] font-sans ">
       {/* navbar */}
