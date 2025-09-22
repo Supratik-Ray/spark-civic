@@ -8,20 +8,24 @@ export const signUpUser = async ({
   email,
   password,
   full_name,
-  role = "user",
+  role = "citizen",
 }) => {
   try {
-    const { data, error } = await supabase.auth.signUp({
+    const { data: userData, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { full_name, role },
-      },
     });
+    if (signUpError) throw signUpError;
 
-    if (error) throw error;
+    const userId = userData.user.id;
 
-    return { success: true, data };
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert([{ id: userId, full_name, role }]);
+
+    if (profileError) throw profileError;
+
+    return { success: true, data: userData };
   } catch (error) {
     return { success: false, error };
   }
@@ -69,9 +73,13 @@ export const fetchProfile = async (user_id) => {
   try {
     const { data, error } = await supabase
       .from("profiles")
-      .select("*")
+      .select("full_name,role")
       .eq("id", user_id)
       .single();
+
+    console.log("hello");
+
+    console.log(data, error);
 
     if (error) throw error;
     return { success: true, data };

@@ -14,8 +14,10 @@ import { FaBolt, FaChartBar, FaHome, FaMapMarkerAlt } from "react-icons/fa";
 import IssuesCard from "../components/IssuesCard";
 import AdvantagesCard from "../components/AdvantagesCard";
 import WorkingSteps from "../components/WorkingSteps";
+import useLoginToast from "../hooks/useLoginToast";
 
 const HomePage = () => {
+  useLoginToast();
   return (
     <div className="bg-[#F3F7FC] font-sans ">
       {/* empower your city */}

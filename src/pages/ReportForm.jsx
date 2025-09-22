@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { reportFormSchema } from "../schema";
 import { createIssueWithImage } from "../supabase/api/issues";
+import useLoginToast from "../hooks/useLoginToast";
 
 // Map service to categoryId
 const serviceToCategoryId = {
@@ -12,6 +13,7 @@ const serviceToCategoryId = {
 };
 
 function ReportForm() {
+  useLoginToast();
   return (
     <div className="flex flex-col justify-center items-center">
       <Formik
@@ -104,7 +106,6 @@ function ReportForm() {
               />
             </div>
 
-            
             <div>
               <label htmlFor="description" className="block font-medium">
                 Detail description:
@@ -150,7 +151,6 @@ function ReportForm() {
               )}
             </div>
 
-           
             <div>
               <label className="block font-medium">Location (Lat, Lng):</label>
               <div className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100">
@@ -160,7 +160,6 @@ function ReportForm() {
               </div>
             </div>
 
-            
             <button
               type="button"
               onClick={() => {
