@@ -1,74 +1,107 @@
-import React, { useRef, useState } from 'react'
-import UserReportStats from '../components/UserReportStats'
-import { FaChevronDown, FaSearch } from 'react-icons/fa'
-import CitizenIssueCard from '../components/CitizenIssueCard'
+import { useEffect, useState } from "react";
+import FilterInputs from "../components/FilterInputs";
+import IssueCards from "../components/IssueCards";
+import StatusCards from "../components/StatusCards";
+import { fetchIssues } from "../supabase/api/issues";
+import useGeoLocation from "../hooks/useGeolocation";
 
 const AllIssuesPage = () => {
-  const searchRef = useRef(null)
-  const [status, setStatus] = useState("allStatus")
+  const [issues, setIssues] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [issueFilters, setIssueFilter] = useState({
+    lon: null,
+    lat: null,
+    radius: null,
+    status: null,
+    category_id: null,
+    assigned_to: null,
+    created_by: null,
+  });
 
-  const options = [
-    { value: "allStatus", label: "All Status" },
-    { value: "pending", label: "Pending" },
-    { value: "inProgress", label: "In Progress" },
-    { value: "resolved", label: "Resolved" },
-  ]
+  const location = useGeoLocation();
+
+  useEffect(() => {
+    if (location) {
+      setIssueFilter((prev) => ({
+        ...prev,
+        lat: location[0],
+        lon: location[1],
+      }));
+    }
+  }, [location]);
+
+  useEffect(() => {
+    const getIssues = async () => {
+      const result = await fetchIssues(issueFilters);
+      if (result.success) {
+        setIssues(result.data);
+      }
+    };
+    getIssues();
+  }, [issueFilters]);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setIssueFilter((prev) => ({ ...prev, [name]: value || null }));
+  };
+
+  const handleSearchInput = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredIssues = issues.filter((issue) =>
+    issue.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalIssues = filteredIssues.length;
+  const pendingIssues = filteredIssues.filter(
+    (issue) => issue.status === "pending"
+  ).length;
+  const inProgressIssues = filteredIssues.filter(
+    (issue) => issue.status === "in_progress"
+  ).length;
+  const resolvedIssues = filteredIssues.filter(
+    (issue) => issue.status === "resolved"
+  ).length;
+
+  const statusCards = [
+    {
+      issueTitle: "Total Issues",
+      issueNum: totalIssues,
+      color: "border-white",
+    },
+    {
+      issueTitle: "Pending Issues",
+      issueNum: pendingIssues,
+      color: "border-blue-500",
+    },
+    {
+      issueTitle: "In Progress",
+      issueNum: inProgressIssues,
+      color: "border-amber-500",
+    },
+    {
+      issueTitle: "Resolved",
+      issueNum: resolvedIssues,
+      color: "border-green-500",
+    },
+  ];
+
+  console.log(issues);
 
   return (
-    <div className=' py-10 px-20'>
-      <h1 className=' text-3xl font-bold'>All Reported Issues</h1>
-      <h4 className='text-gray-600 text-[16px]'>Track the status of all civic reports</h4>
-      <div className=' py-7 grid sm:grid-cols-2 lg:grid-cols-4 gap-4'>
-        <UserReportStats status="Total Issues" num={3}/>
-        <UserReportStats status="Pending" num={3}/>
-        <UserReportStats status="In Progress" num={3}/>
-        <UserReportStats status="Resolved" num={3}/>
-      </div>
-      
-      <form className=' py-3 flex gap-4'>
-        <label className='border-1 border-gray-300 rounded-md flex-1 flex items-center py-2 px-3 gap-4'>
-          <FaSearch 
-            className='font-extralight text-gray-500 cursor-pointer' 
-            onClick={()=> searchRef.current.focus()}
-          />
-          <input 
-            type="text" 
-            ref={searchRef}
-            placeholder='Search issues...'
-            className=' flex-1 text-md text-gray-800 outline-0'
-          />
-        </label>
-
-        <div className='relative border-1 border-gray-300 rounded-md py-2 px-3 w-48 flex items-center justify-between cursor-pointer'>
-          <span className='text-sm text-gray-700'>
-            {options.find(opt => opt.value === status)?.label}
-          </span>
-          <FaChevronDown className='text-gray-400 font-extralight text-xs'/>
-          
-          <select
-            name="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className='absolute inset-0 w-full h-full opacity-0 cursor-pointer'
-          >
-            {options.map(opt => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </form>
-
-      <div className=' grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4'>
-        <CitizenIssueCard type="road" title="Large pothole on Main Street" ticket="TKT-2024-001" status="In Progress" desc="There is a dangerous pothole near the intersection of Main St and 5th Ave. Multiple vehicles have been damaged." ward={3} userName="John Citizen" votes={42} assignedTo="Mike Staff" />
-
-        <CitizenIssueCard type="electricity" title="Street light not working" ticket="TKT-2024-003" status="Pending" desc="Street light at Park Street has been out for a week. Area is very dark at night." ward={2} userName="David Lee" votes={15} assignedTo="" />
-
-        <CitizenIssueCard type="road" title="Broken sidewalk near school" ticket="TKT-2024-005" status="Resolved" desc="Sidewalk is cracked and uneven, creating trip hazard for students." ward={3} userName="Michael Brown" votes={89} assignedTo="" />
-      </div>
+    <div className="min-h-screen bg-gray-100 p-10">
+      <h1 className="font-bold text-4xl p-5">All Issues</h1>
+      <StatusCards statusCards={statusCards} />
+      <FilterInputs
+        issueFilters={issueFilters}
+        handleFilterChange={handleFilterChange}
+        handleSearchInput={handleSearchInput}
+        searchQuery={searchQuery}
+      />
+      <IssueCards issues={filteredIssues} />
     </div>
-  )
-}
+  );
+};
 
-export default AllIssuesPage
+export default AllIssuesPage;

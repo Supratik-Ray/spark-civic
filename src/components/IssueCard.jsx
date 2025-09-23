@@ -1,7 +1,7 @@
 import { IoMdPerson } from "react-icons/io";
 import { AiOutlineLike } from "react-icons/ai";
 
-const AdminIssueCard = ({ issue }) => {
+const IssueCard = ({ issue }) => {
   const statusColor = {
     pending: "bg-blue-200 text-blue-900",
     in_progress: "bg-amber-200 text-amber-900",
@@ -40,4 +40,4 @@ const AdminIssueCard = ({ issue }) => {
   );
 };
 
-export default AdminIssueCard;
+export default IssueCard;

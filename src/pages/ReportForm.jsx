@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { reportFormSchema } from "../schema";
-import { createIssueWithImage, fetchIssues } from "../supabase/api/issues";
+import { createIssueWithImage } from "../supabase/api/issues";
 import useLoginToast from "../hooks/useLoginToast";
 import { useAuth } from "../hooks/useAuth";
 

@@ -11,7 +11,7 @@ import {
   FiFileText,
 } from "react-icons/fi";
 import { FaBolt, FaChartBar, FaHome, FaMapMarkerAlt } from "react-icons/fa";
-import IssuesCard from "../components/IssuesCard";
+import IssueHomeStatus from "../components/IssueHomeStatus";
 import AdvantagesCard from "../components/AdvantagesCard";
 import WorkingSteps from "../components/WorkingSteps";
 import useLoginToast from "../hooks/useLoginToast";
@@ -57,18 +57,18 @@ const HomePage = () => {
 
       {/* stats */}
       <article className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-7 px-10 md:px-12 lg:px-24 py-12 sm:py-18">
-        <IssuesCard
+        <IssueHomeStatus
           text="Total Issues Reported"
           num="156"
           icon={FiCheckCircle}
         />
-        <IssuesCard text="Issues Resolved" num="89" icon={FiCheckCircle} />
-        <IssuesCard
+        <IssueHomeStatus text="Issues Resolved" num="89" icon={FiCheckCircle} />
+        <IssueHomeStatus
           text="Average Resolution Time"
           num="3.5 days"
           icon={FiClock}
         />
-        <IssuesCard text="Active Citizens" num="1,234" icon={FiUsers} />
+        <IssueHomeStatus text="Active Citizens" num="1,234" icon={FiUsers} />
       </article>
 
       {/* why choose */}

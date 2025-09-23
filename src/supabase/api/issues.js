@@ -133,7 +133,7 @@ export const fetchIssues = async (filters = {}) => {
     const {
       lon = null,
       lat = null,
-      radius = 5000,
+      radius = null,
       status = null,
       category_id = null,
       assigned_to = null,

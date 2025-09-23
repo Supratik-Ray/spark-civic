@@ -1,6 +1,4 @@
-import React from "react";
-
-const IssuesCard = ({ text, num, icon: Icon }) => {
+const IssueHomeStatus = ({ text, num, icon: Icon }) => {
   return (
     <div className="relative flex items-center justify-between border-[2px] border-gray-200 rounded-[10px] bg-white py-4 sm:py-6 px-4 sm:px-5 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
       {/* left content */}
@@ -20,4 +18,4 @@ const IssuesCard = ({ text, num, icon: Icon }) => {
   );
 };
 
-export default IssuesCard;
+export default IssueHomeStatus;

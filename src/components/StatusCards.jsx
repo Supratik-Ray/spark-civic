@@ -1,4 +1,4 @@
-const AdminStatusCards = ({ statusCards }) => {
+const StatusCards = ({ statusCards }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-5">
       {statusCards.map((card, index) => {
@@ -16,4 +16,4 @@ const AdminStatusCards = ({ statusCards }) => {
   );
 };
 
-export default AdminStatusCards;
+export default StatusCards;

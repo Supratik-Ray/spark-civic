@@ -3,14 +3,16 @@ import HomePage from "../pages/HomePage";
 import Navbar from "../components/Navbar";
 import AllIssuesPage from "../pages/AllIssuesPage";
 import MapView from "../pages/MapView";
-import Analytics from "../pages/Analytics";
+
 import ReportForm from "../pages/ReportForm";
-import AdminPage from "../pages/AdminPage";
+// import AdminPage from "../pages/AdminPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import GuestRoute from "./GuestRoute";
 import IssueDetails from "../pages/IssueDetails";
+import MyIssuesPage from "../pages/MyIssuesPage";
+import AssignedIssuesPage from "../pages/AssignedIssuesPage";
 
 const AppRouter = () => {
   return (
@@ -18,10 +20,9 @@ const AppRouter = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/all-issues" element={<AllIssuesPage />} />
+        <Route path="/issues" element={<AllIssuesPage />} />
         <Route path="/map-view" element={<MapView />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/issueDetails/:id" element={<IssueDetails />} />
+        <Route path="/issues/:id" element={<IssueDetails />} />
         <Route
           path="/report"
           element={
@@ -31,10 +32,18 @@ const AppRouter = () => {
           }
         />
         <Route
-          path="/admin/dashboard"
+          path="/myIssues"
+          element={
+            <ProtectedRoute role="citizen">
+              <MyIssuesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assignedIssues"
           element={
             <ProtectedRoute role="admin">
-              <AdminPage />
+              <AssignedIssuesPage />
             </ProtectedRoute>
           }
         />

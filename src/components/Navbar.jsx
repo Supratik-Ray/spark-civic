@@ -71,13 +71,31 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/all-issues"
+              to="/issues"
               className={({ isActive }) =>
                 `${isActive ? activelinkStyle : navlinkStyle}`
               }
             >
               <FiFileText />
               All Issues
+            </NavLink>
+            <NavLink
+              to="/map-view"
+              className={({ isActive }) =>
+                `${isActive ? activelinkStyle : navlinkStyle}`
+              }
+            >
+              <FaMap />
+              Map View
+            </NavLink>
+            <NavLink
+              to="/myIssues"
+              className={({ isActive }) =>
+                `${isActive ? activelinkStyle : navlinkStyle}`
+              }
+            >
+              <MdDashboard />
+              My Issues
             </NavLink>
           </div>
         )}
@@ -86,13 +104,23 @@ const Navbar = () => {
         {profile?.role === "admin" && (
           <div className="hidden md:flex lg:gap-3 md:gap-2">
             <NavLink
-              to="/admin/dashboard"
+              to="/"
               className={({ isActive }) =>
                 `${isActive ? activelinkStyle : navlinkStyle}`
               }
             >
-              <MdDashboard />
-              Dashboard
+              <FaHome />
+              Home
+            </NavLink>
+
+            <NavLink
+              to="/issues"
+              className={({ isActive }) =>
+                `${isActive ? activelinkStyle : navlinkStyle}`
+              }
+            >
+              <FiFileText />
+              All Issues
             </NavLink>
 
             <NavLink
@@ -104,15 +132,14 @@ const Navbar = () => {
               <FaMap />
               Map View
             </NavLink>
-
             <NavLink
-              to="/analytics"
+              to="/assignedIssues"
               className={({ isActive }) =>
                 `${isActive ? activelinkStyle : navlinkStyle}`
               }
             >
-              <GrAnalytics />
-              Analytics
+              <MdDashboard />
+              Assigned Issues
             </NavLink>
           </div>
         )}

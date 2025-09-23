@@ -16,7 +16,11 @@ const Timeline = ({ issueId }) => {
 
       try {
         setLoading(true);
-        const { success, data, error: fetchError } = await getIssueTimeline(issueId);
+        const {
+          success,
+          data,
+          error: fetchError,
+        } = await getIssueTimeline(issueId);
 
         if (success) {
           setTimelineEvents(data || []);
@@ -33,6 +37,8 @@ const Timeline = ({ issueId }) => {
 
     fetchTimeline();
   }, [issueId]);
+
+  console.log(timelineEvents);
 
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown date";
@@ -51,12 +57,13 @@ const Timeline = ({ issueId }) => {
     }
   };
 
-  const getEventProperty = (event, keys, fallback = "Unknown") => {
-    for (const key of keys) {
-      if (event[key] !== undefined && event[key] !== null && event[key] !== "") return event[key];
-    }
-    return fallback;
-  };
+  // const getEventProperty = (event, keys, fallback = "Unknown") => {
+  //   for (const key of keys) {
+  //     if (event[key] !== undefined && event[key] !== null && event[key] !== "")
+  //       return event[key];
+  //   }
+  //   return fallback;
+  // };
 
   if (loading)
     return (
@@ -82,7 +89,9 @@ const Timeline = ({ issueId }) => {
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
-      <h3 className="text-xl font-bold text-gray-800 mb-8 text-center">Issue Timeline</h3>
+      <h3 className="text-xl font-bold text-gray-800 mb-8 text-center">
+        Issue Timeline
+      </h3>
 
       <div className="relative">
         {/* Vertical line */}
@@ -95,12 +104,18 @@ const Timeline = ({ issueId }) => {
 
             {/* Event card */}
             <div className="bg-gray-50 p-4 rounded-lg shadow hover:shadow-md transition-all duration-200">
+              {/* Event description */}
               <p className="text-gray-800 font-medium text-md">
-                {getEventProperty(event, ["event_description", "description", "action"], "No description")}
+                {event.note || "No description"}
               </p>
+
+              {/* Event meta */}
               <p className="text-sm text-gray-500 mt-1">
-                By {getEventProperty(event, ["changed_by_name", "user_name", "author"], "Unknown")} •{" "}
-                {formatDate(getEventProperty(event, ["changed_at", "created_at", "timestamp"]))}
+                By {event.changed_by_profile?.full_name || "Unknown"}
+                {event.status === "in_progress" && event.assigned_to_profile
+                  ? ` • Assigned to ${event.assigned_to_profile.full_name}`
+                  : ""}
+                • {formatDate(event.changed_at)}
               </p>
             </div>
           </div>
