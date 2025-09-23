@@ -1,4 +1,4 @@
-const AdminInput = () => {
+const AdminInput = ({ handleFilterChange }) => {
   return (
     <div className="grid grid-cols-12 p-5 gap-3">
       <input
@@ -10,12 +10,13 @@ const AdminInput = () => {
       <select
         name="status"
         id="status"
+        onChange={handleFilterChange}
         className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
       >
-        <option value="All Status">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Resolved">Resolved</option>
+        <option value="all_status">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="in_progress">In Progress</option>
+        <option value="resolved">Resolved</option>
       </select>
 
       <select
@@ -36,9 +37,8 @@ const AdminInput = () => {
         className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
       >
         <option value="Radius">Radius</option>
-        <option value="Pending">Pending</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Resolved">Resolved</option>
+        <option value="Radius">5km</option>
+        <option value="Pending">10km</option>
       </select>
     </div>
   );

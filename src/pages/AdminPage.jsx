@@ -1,69 +1,70 @@
+import { useEffect, useState } from "react";
 import AdminInput from "../components/AdminInput";
 import AdminIssueCards from "../components/AdminIssueCards";
 import AdminStatusCards from "../components/AdminStatusCards";
-
-const statusCards = [
-  {
-    issueTitle: "Total Issues",
-    issueNum: 156,
-    color: "border-white",
-  },
-  {
-    issueTitle: "Pending Issues",
-    issueNum: 23,
-    color: "border-blue-500",
-  },
-  {
-    issueTitle: "In Progress",
-    issueNum: 44,
-    color: "border-amber-500",
-  },
-  {
-    issueTitle: "Resolved",
-    issueNum: 89,
-    color: "border-green-500",
-  },
-];
-
-const issues = [
-  {
-    title: "Pothole",
-    description:
-      "There is a dangerous pothole near the intersection of Main St and 5th Ave. Multiple vehicles have been damaged.",
-    status: "resolved",
-    statusColor: "bg-green-200 text-green-500",
-    tktNo: "TKT-202",
-    createdBy: "John",
-    votes: 24,
-  },
-  {
-    title: "Pothole",
-    description:
-      "There is a dangerous pothole near the intersection of Main St and 5th Ave. Multiple vehicles have been damaged.",
-    status: "pending",
-    statusColor: "bg-blue-200 text-blue-500",
-    tktNo: "TKT-202",
-    createdBy: "John",
-    votes: 24,
-  },
-  {
-    title: "Pothole",
-    description:
-      "There is a dangerous pothole near the intersection of Main St and 5th Ave. Multiple vehicles have been damaged.",
-    status: "resolved",
-    statusColor: "bg-yellow-200 text-yellow-500",
-    tktNo: "TKT-202",
-    createdBy: "John",
-    votes: 24,
-  },
-];
+import { fetchIssues } from "../supabase/api/issues";
 
 const AdminPage = () => {
+  const [issues, setIssues] = useState([]);
+  const [statusFilter, setStatusFilter] = useState();
+
+  useEffect(() => {
+    const getIssues = async () => {
+      const result = await fetchIssues(
+        statusFilter === "all_status" ? {} : { status: statusFilter }
+      );
+      if (result.success) {
+        setIssues(result.data);
+      }
+    };
+    getIssues();
+  }, [statusFilter]);
+
+  const handleFilterChange = (e) => {
+    setStatusFilter(e.target.value);
+  };
+
+  const totalIssues = issues.length;
+  const pendingIssues = issues.filter(
+    (issue) => issue.status === "pending"
+  ).length;
+  const inProgressIssues = issues.filter(
+    (issue) => issue.status === "in_progress"
+  ).length;
+  const resolvedIssues = issues.filter(
+    (issue) => issue.status === "resolved"
+  ).length;
+
+  const statusCards = [
+    {
+      issueTitle: "Total Issues",
+      issueNum: totalIssues,
+      color: "border-white",
+    },
+    {
+      issueTitle: "Pending Issues",
+      issueNum: pendingIssues,
+      color: "border-blue-500",
+    },
+    {
+      issueTitle: "In Progress",
+      issueNum: inProgressIssues,
+      color: "border-amber-500",
+    },
+    {
+      issueTitle: "Resolved",
+      issueNum: resolvedIssues,
+      color: "border-green-500",
+    },
+  ];
+
+  console.log(issues);
+
   return (
     <div className="min-h-screen bg-gray-100 p-10">
       <h1 className="font-bold text-4xl p-5">Admin Dashboard</h1>
       <AdminStatusCards statusCards={statusCards} />
-      <AdminInput />
+      <AdminInput handleFilterChange={handleFilterChange} />
       <AdminIssueCards issues={issues} />
     </div>
   );
