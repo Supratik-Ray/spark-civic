@@ -19,3 +19,4 @@ function ProtectedRoute({ children, role }) {
 }
 
 export default ProtectedRoute;
+

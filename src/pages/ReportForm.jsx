@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { reportFormSchema } from "../schema";
 import { createIssueWithImage } from "../supabase/api/issues";
 import useLoginToast from "../hooks/useLoginToast";
+import { useAuth } from "../hooks/useAuth";
 
 // Map service to categoryId
 const serviceToCategoryId = {
@@ -13,6 +14,7 @@ const serviceToCategoryId = {
 };
 
 function ReportForm() {
+  const { session } = useAuth();
   useLoginToast();
   return (
     <div className="flex flex-col justify-center items-center">
@@ -41,7 +43,7 @@ function ReportForm() {
               categoryId,
               locationCoords: values.location,
               file: values.photo,
-              createdBy: "5b243f72-6cd0-497b-bd5e-1988c6af1189",
+              createdBy: session?.user.id,
             });
 
             if (response.success) {
@@ -170,7 +172,8 @@ function ReportForm() {
                         position.coords.latitude,
                         position.coords.longitude,
                       ]),
-                    (error) => alert("Error getting location: " + error.message)
+                    (error) =>
+                      console.error("Error getting location: " + error.message)
                   );
                 } else {
                   alert("Geolocation is not supported by this browser.");

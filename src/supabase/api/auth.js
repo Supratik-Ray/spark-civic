@@ -77,10 +77,6 @@ export const fetchProfile = async (user_id) => {
       .eq("id", user_id)
       .single();
 
-    console.log("hello");
-
-    console.log(data, error);
-
     if (error) throw error;
     return { success: true, data };
   } catch (error) {

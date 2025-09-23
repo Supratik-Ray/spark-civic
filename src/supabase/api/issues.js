@@ -79,6 +79,15 @@ export const createIssueWithImage = async ({
   assignedTo = null,
 }) => {
   try {
+    console.log(
+      title,
+      description,
+      categoryId,
+      locationCoords,
+      file,
+      createdBy,
+      assignedTo
+    );
     // Validate locationCoords
     if (
       !Array.isArray(locationCoords) ||
