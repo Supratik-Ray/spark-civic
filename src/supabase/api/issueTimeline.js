@@ -12,7 +12,10 @@ export async function getIssueTimeline(issueId) {
         note,
         changed_by,
         changed_at: created_at,
-        profiles (
+        changed_by_profile:profiles!issue_timeline_changed_by_fkey (
+          full_name
+        ),
+        assigned_to_profile:profiles!issue_timeline_assigned_to_fkey (
           full_name
         )
       `
