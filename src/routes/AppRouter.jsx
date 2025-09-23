@@ -10,6 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import GuestRoute from "./GuestRoute";
+import IssueDetails from "../pages/IssueDetails";
 
 const AppRouter = () => {
   return (
@@ -20,6 +21,7 @@ const AppRouter = () => {
         <Route path="/all-issues" element={<AllIssuesPage />} />
         <Route path="/map-view" element={<MapView />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/issueDetails/:id" element={<IssueDetails />} />
         <Route
           path="/report"
           element={
