@@ -76,13 +76,20 @@ const MapView = () => {
 
   return (
     <div className="h-screen w-full relative ">
-      {userLocation && (
+      {!userLocation ? (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-600">Loading map...</p>
+        </div>
+      ) : (
         <MapContainer
           center={userLocation}
           zoom={13}
           style={{ height: "100%", width: "100%" }}
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+          />
           {issues.map((issue) => {
             return (
               <Marker
@@ -108,7 +115,7 @@ const MapView = () => {
             );
           })}
           <FilterControl>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col mt-5 lg:mt-0 gap-2">
               <h3 className="md:text-lg font-semibold">Filters:</h3>
               <div className="flex flex-col md:flex-row gap-2">
                 <select
