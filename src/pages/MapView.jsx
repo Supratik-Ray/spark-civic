@@ -3,6 +3,7 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 import { fetchIssues } from "../supabase/api/issues";
 import FilterControl from "../components/FilterControl";
+import useGeoLocation from "../hooks/useGeolocation";
 
 const markerColors = {
   1: "orange",
@@ -31,106 +32,126 @@ const createIcon = (category) => {
 };
 const MapView = () => {
   const [issues, setIssues] = useState([]);
+  const [issueFilters, setIssueFilters] = useState({
+    lon: null,
+    lat: null,
+    radius: null,
+    status: null,
+    category_id: null,
+  });
   const [userLocation, setUserLocation] = useState(null);
+
+  const location = useGeoLocation();
+
+  useEffect(() => {
+    if (location) {
+      const lat = location[0];
+      const lon = location[1];
+      setIssueFilters((prev) => ({
+        ...prev,
+        lat,
+        lon,
+      }));
+      setUserLocation([lat, lon]);
+    }
+  }, [location]);
 
   useEffect(() => {
     async function getIssues() {
-      const results = await fetchIssues();
+      const results = await fetchIssues(issueFilters);
       if (results.success) {
-        console.log(results.data);
         setIssues(results.data);
       }
     }
 
     getIssues();
+  }, [issueFilters]);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation([
-            position.coords.latitude,
-            position.coords.longitude,
-          ]);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    }
-  }, []);
+  function handleFilterChange(e) {
+    const { name, value } = e.target;
+    setIssueFilters((prev) => ({ ...prev, [name]: value || null }));
+  }
 
   return (
     <div className="h-screen w-full relative">
-      <MapContainer
-        center={userLocation || [26.70592, 88.4506624]}
-        zoom={13}
-        style={{ height: "100%", width: "100%" }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {issues.map((issue) => {
-          return (
-            <Marker
-              key={issue.id}
-              position={[issue.coordinates[1], issue.coordinates[0]]}
-              className="bg-red-500"
-              icon={createIcon(issue.category_id)}
-            >
-              <Tooltip>
-                <div className="p-5 border-l-5 border-blue-600 bg-white space-y-2">
-                  <h3 className="font-bold text-lg ">{issue.title}</h3>
-                  <p className="font-semibold text-md">
-                    Status: {issue.status}
-                  </p>
-                  <p className="font-semibold text-md">
-                    category: {issueCategories[issue.category_id].icon}
-                    {issueCategories[issue.category_id].name}
-                  </p>
-                </div>
-              </Tooltip>
-            </Marker>
-          );
-        })}
-        <FilterControl>
-          <div className="flex flex-col gap-2">
-            <h3 className="md:text-lg font-semibold">Filters:</h3>
-            <div className="flex flex-col md:flex-row gap-2">
-              <select
-                name="status"
-                id="status"
-                className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
+      {userLocation && (
+        <MapContainer
+          center={userLocation}
+          zoom={13}
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {issues.map((issue) => {
+            return (
+              <Marker
+                key={issue.id}
+                position={[issue.coordinates[1], issue.coordinates[0]]}
+                className="bg-red-500"
+                icon={createIcon(issue.category_id)}
               >
-                <option value="All Status">All Status</option>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Resolved">Resolved</option>
-              </select>
+                <Tooltip>
+                  <div className="p-5 border-l-5 border-blue-600 bg-white space-y-2">
+                    <h3 className="font-bold text-lg ">{issue.title}</h3>
+                    <p className="font-semibold text-md">
+                      Status: {issue.status}
+                    </p>
+                    <p className="font-semibold text-md">
+                      category: {issueCategories[issue.category_id].icon}
+                      {issueCategories[issue.category_id].name}
+                    </p>
+                  </div>
+                </Tooltip>
+              </Marker>
+            );
+          })}
+          <FilterControl>
+            <div className="flex flex-col gap-2">
+              <h3 className="md:text-lg font-semibold">Filters:</h3>
+              <div className="flex flex-col md:flex-row gap-2">
+                <select
+                  name="status"
+                  id="status"
+                  onChange={handleFilterChange}
+                  value={issueFilters.status || ""}
+                  className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
+                >
+                  <option value="">All Status</option>
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="resolved">Resolved</option>
+                </select>
 
-              <select
-                name="categories"
-                id="categories"
-                className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
-              >
-                <option value="All Categories">All Categories</option>
-                <option value="Road">Road</option>
-                <option value="Water">Water</option>
-                <option value="Electricity">Electricity</option>
-                <option value="Garbage">Garbage</option>
-              </select>
+                <select
+                  name="category_id"
+                  id="category_id"
+                  onChange={handleFilterChange}
+                  value={issueFilters.category_id || ""}
+                  className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
+                >
+                  <option value="">All Categories</option>
+                  <option value={2}>Road</option>
+                  <option value={3}>Water</option>
+                  <option value={1}>Electricity</option>
+                  <option value={4}>Waste Management</option>
+                </select>
 
-              <select
-                name="distance"
-                id="distance"
-                className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
-              >
-                <option value="distance">Distance</option>
-                <option value={1000}>1 km</option>
-                <option value={5000}>5 km</option>
-                <option value={10000}>10 km</option>
-              </select>
+                <select
+                  name="radius"
+                  id="radius"
+                  onChange={handleFilterChange}
+                  value={issueFilters.radius || ""}
+                  className="col-span-12 md:col-span-2 border border-gray-300 rounded-md p-2"
+                >
+                  <option value="">Distance</option>
+                  <option value={1000}>1 km</option>
+                  <option value={5000}>5 km</option>
+                  <option value={10000}>10 km</option>
+                </select>
+              </div>
             </div>
-          </div>
-        </FilterControl>
-      </MapContainer>
+          </FilterControl>
+        </MapContainer>
+      )}
     </div>
   );
 };
