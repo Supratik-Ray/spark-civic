@@ -3,6 +3,7 @@ import { reportFormSchema } from "../schema";
 import { createIssueWithImage } from "../supabase/api/issues";
 import useLoginToast from "../hooks/useLoginToast";
 import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 // Map service to categoryId
 const serviceToCategoryId = {
@@ -29,7 +30,7 @@ function ReportForm() {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
             if (values.location.length !== 2) {
-              alert("Please get your location first.");
+              toast("Please get your location first.");
               setSubmitting(false);
               return;
             }
@@ -46,15 +47,15 @@ function ReportForm() {
             });
 
             if (response.success) {
-              alert("Issue reported successfully!");
+              toast.success("Issue reported successfully!");
               resetForm();
             } else {
               console.error(response.error);
-              alert("Failed to report issue. Check console for details.");
+              toast.error("Failed to report issue. Check console for details.");
             }
           } catch (error) {
             console.error(error);
-            alert("An unexpected error occurred.");
+            toast.error("An unexpected error occurred.");
           } finally {
             setSubmitting(false);
           }
@@ -175,7 +176,7 @@ function ReportForm() {
                       console.error("Error getting location: " + error.message)
                   );
                 } else {
-                  alert("Geolocation is not supported by this browser.");
+                  toast.error("Geolocation is not supported by this browser.");
                 }
               }}
               className="cursor-pointer w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
