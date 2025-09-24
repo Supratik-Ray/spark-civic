@@ -42,7 +42,7 @@ const HomePage = () => {
           modern cities.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 ">
           <button className="text-white text-sm sm:text-base flex items-center justify-center py-3 px-8 sm:px-10 bg-blue-600 w-full rounded-[10px] hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer font-semibold">
             Report an Issue{" "}
             <span>
