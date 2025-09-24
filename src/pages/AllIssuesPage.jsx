@@ -4,9 +4,11 @@ import IssueCards from "../components/IssueCards";
 import StatusCards from "../components/StatusCards";
 import { fetchIssues } from "../supabase/api/issues";
 import useGeoLocation from "../hooks/useGeolocation";
+import { toast } from "react-toastify";
 
 const AllIssuesPage = () => {
   const [issues, setIssues] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [issueFilters, setIssueFilter] = useState({
     lon: null,
@@ -32,10 +34,14 @@ const AllIssuesPage = () => {
 
   useEffect(() => {
     const getIssues = async () => {
+      setIsLoading(true);
       const result = await fetchIssues(issueFilters);
       if (result.success) {
         setIssues(result.data);
+      } else {
+        toast.error("Error fetching issues!");
       }
+      setIsLoading(false);
     };
     getIssues();
   }, [issueFilters]);
@@ -99,7 +105,7 @@ const AllIssuesPage = () => {
         handleSearchInput={handleSearchInput}
         searchQuery={searchQuery}
       />
-      <IssueCards issues={filteredIssues} />
+      <IssueCards issues={filteredIssues} isLoading={isLoading} />
     </div>
   );
 };

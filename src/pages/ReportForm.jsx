@@ -196,8 +196,8 @@ function ReportForm() {
       </Formik>
 
       {/* Quick Response Section */}
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-5 w-full p-10">
-        <div className="border border-gray-300 shadow-2xl rounded-2xl max-w-fit max-h-fit p-5 flex flex-col gap-2 justify-center items-center">
+      <div className="flex flex-col lg:flex-row  items-center md justify-center gap-5 w-full p-10 text-center">
+        <div className="border border-gray-300 shadow-2xl rounded-2xl w-full lg:max-w-fit max-h-fit p-5 flex flex-col gap-2 justify-center items-center">
           <svg
             className="text-blue-800 text-center"
             xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +217,7 @@ function ReportForm() {
           <p>Real-time status updates</p>
         </div>
 
-        <div className="border border-gray-300 shadow-2xl rounded-2xl max-w-fit max-h-fit p-5 flex flex-col gap-2 justify-center items-center">
+        <div className="border border-gray-300 shadow-2xl rounded-2xl w-full lg:max-w-fit max-h-fit p-5 flex flex-col gap-2 justify-center items-center">
           <svg
             className="text-blue-800 text-center"
             xmlns="http://www.w3.org/2000/svg"
@@ -237,7 +237,7 @@ function ReportForm() {
           <p>Issues addressed within 48 hours</p>
         </div>
 
-        <div className="border border-gray-300 shadow-2xl rounded-2xl max-w-fit max-h-fit p-5 flex flex-col gap-2 justify-center items-center">
+        <div className="border border-gray-300 shadow-2xl rounded-2xl w-full lg:max-w-fit max-h-fit p-5 flex flex-col gap-2 justify-center items-center">
           <svg
             className="text-blue-800 text-center"
             xmlns="http://www.w3.org/2000/svg"
