@@ -78,7 +78,7 @@ const MapView = () => {
     <div className="h-screen w-full relative ">
       {!userLocation ? (
         <div className="flex items-center justify-center h-full">
-          <p className="text-gray-600">Loading map...</p>
+          <p className="text-gray-700 text-lg">Loading map...</p>
         </div>
       ) : (
         <MapContainer
