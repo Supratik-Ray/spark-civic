@@ -5,7 +5,7 @@ const StatusCards = ({ statusCards }) => {
         return (
           <div
             key={index}
-            className={`${card.color} border-1 border-l-4 p-5 rounded-md bg-white shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-200`}
+            className={`${card.color} border-1 border-l-4 p-5 rounded-md bg-white shadow-lg`}
           >
             <h4 className="text-xl font-bold">{card.issueTitle}</h4>
             <h2 className="font-bold text-3xl">{card.issueNum}</h2>

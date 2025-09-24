@@ -20,7 +20,7 @@ const MyIssuesPage = () => {
   console.log(issues);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-gray-100 p-3 md:5 lg:p-10">
       <h1 className="font-bold text-4xl p-5">My Issues</h1>
       {issues.length === 0 ? (
         <div className="text-center p-10 text-lg">

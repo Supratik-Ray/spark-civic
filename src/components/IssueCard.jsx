@@ -1,5 +1,12 @@
 import { IoMdPerson } from "react-icons/io";
-import { AiOutlineLike } from "react-icons/ai";
+import { format } from "date-fns"; // optional: for date formatting
+
+const category = {
+  1: "⚡ Electricity",
+  2: "🛣️ Road",
+  3: "💧 Water",
+  4: "🗑️ Garbage",
+};
 
 const IssueCard = ({ issue }) => {
   const statusColor = {
@@ -9,32 +16,50 @@ const IssueCard = ({ issue }) => {
   };
 
   const color = statusColor[issue.status];
+  const categoryIcon = category[issue.category_id]
+    ? category[issue.category_id].split(" ")[0] // first part = emoji
+    : "❓";
+
+  // Format created_at date
+  const createdAt = issue.created_at
+    ? format(new Date(issue.created_at), "dd MMM yyyy")
+    : "";
 
   return (
-    <div className="flex flex-col gap-5 border-gray-400 p-5 rounded-md shadow-lg bg-white hover:shadow-2xl transform hover:scale-105 transition duration-200">
-      <div className="flex justify-between">
-        <h2 className="font-semibold text-xl">{issue.title}</h2>
-        <div>
-          <span className={`${color} rounded-full p-1 px-2 text-sm font-bold`}>
-            {issue.status}
-          </span>
-        </div>
+    <div
+      className="flex flex-col justify-between border-gray-300 p-4 rounded-xl shadow-md bg-white min-h-[180px] 
+      transform transition duration-200 hover:scale-105 hover:shadow-2xl"
+    >
+      {/* Header */}
+      <div className="flex justify-between items-start mb-1">
+        <h2 className="font-semibold text-lg flex items-center gap-2 line-clamp-2">
+          <span className="text-xl">{categoryIcon}</span>
+          {issue.title}
+        </h2>
+        <span
+          className={`${color} rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap`}
+        >
+          {issue.status}
+        </span>
       </div>
-      <p className="text-gray-700">{issue.ticket_no}</p>
-      <p className="text-gray-700 my-2">{issue.description}</p>
-      <div className="flex justify-between">
+
+      {/* Ticket No */}
+      <p className="text-gray-500 text-sm mb-1 flex items-center gap-2">
+        #{issue.ticket_no}
+      </p>
+
+      {/* Description */}
+      <p className="text-gray-700 text-sm flex-grow line-clamp-3 mb-2">
+        {issue.description}
+      </p>
+
+      {/* Footer */}
+      <div className="flex justify-between items-center text-gray-600 text-sm mt-auto">
         <span className="flex items-center gap-2">
-          <i>
-            <IoMdPerson />
-          </i>
+          <IoMdPerson className="text-lg" />
           {issue.created_by_name}
         </span>
-        <span className="flex items-center gap-2">
-          <i>
-            <AiOutlineLike />
-          </i>
-          {issue.votes}
-        </span>
+        <span className="text-gray-400 text-xs">{createdAt}</span>
       </div>
     </div>
   );

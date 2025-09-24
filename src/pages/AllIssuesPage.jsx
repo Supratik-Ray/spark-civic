@@ -90,7 +90,7 @@ const AllIssuesPage = () => {
   console.log(issues);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-gray-100 p-3 md:5 lg:p-10">
       <h1 className="font-bold text-4xl p-5">All Issues</h1>
       <StatusCards statusCards={statusCards} />
       <FilterInputs
