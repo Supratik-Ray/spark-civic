@@ -115,7 +115,7 @@ const MapView = () => {
             );
           })}
           <FilterControl>
-            <div className="flex flex-col mt-5 lg:mt-0 gap-2">
+            <div className="flex flex-col gap-2">
               <h3 className="md:text-lg font-semibold">Filters:</h3>
               <div className="flex flex-col md:flex-row gap-2">
                 <select

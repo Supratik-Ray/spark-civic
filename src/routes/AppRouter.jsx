@@ -13,10 +13,12 @@ import GuestRoute from "./GuestRoute";
 import IssueDetails from "../pages/IssueDetails";
 import MyIssuesPage from "../pages/MyIssuesPage";
 import AssignedIssuesPage from "../pages/AssignedIssuesPage";
+import ScrollToTop from "./ScrollToTop";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
