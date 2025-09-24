@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchIssues } from "../supabase/api/issues";
 import FilterControl from "../components/FilterControl";
 import useGeoLocation from "../hooks/useGeolocation";
+import { useNavigate } from "react-router-dom";
 
 const markerColors = {
   1: "orange",
@@ -40,6 +41,7 @@ const MapView = () => {
     category_id: null,
   });
   const [userLocation, setUserLocation] = useState(null);
+  const navigate = useNavigate();
 
   const location = useGeoLocation();
 
@@ -73,7 +75,7 @@ const MapView = () => {
   }
 
   return (
-    <div className="h-screen w-full relative">
+    <div className="h-screen w-full relative ">
       {userLocation && (
         <MapContainer
           center={userLocation}
@@ -88,6 +90,7 @@ const MapView = () => {
                 position={[issue.coordinates[1], issue.coordinates[0]]}
                 className="bg-red-500"
                 icon={createIcon(issue.category_id)}
+                eventHandlers={{ click: () => navigate(`/issues/${issue.id}`) }}
               >
                 <Tooltip>
                   <div className="p-5 border-l-5 border-blue-600 bg-white space-y-2">

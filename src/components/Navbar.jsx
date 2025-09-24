@@ -127,7 +127,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-30 border-b border-gray-300 bg-white">
+    <nav className="sticky top-0 z-10000 border-b border-gray-300 bg-white">
       <div className="px-4 sm:px-6 md:px-10 lg:px-16 py-3 flex items-center justify-between relative">
         {/* logo */}
         <div
