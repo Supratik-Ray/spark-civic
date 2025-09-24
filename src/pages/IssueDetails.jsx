@@ -6,7 +6,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import LocationName from "../components/LocationName";
 import CommentSystem from "../components/CommentSystem";
-import Timeline from "../components/TimeLine";
+import Timeline from "../components/Timeline";
 import { getCurrentUser } from "../supabase/api/auth";
 import { useAuth } from "../hooks/useAuth";
 import { fetchAdmins } from "../supabase/api/profile";
