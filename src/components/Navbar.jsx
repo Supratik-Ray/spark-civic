@@ -135,10 +135,10 @@ const Navbar = () => {
           className="flex gap-2 items-center cursor-pointer"
         >
           <div className="h-8 w-8 bg-blue-600 flex items-center justify-center text-white font-bold rounded-[10px] text-xl">
-            C
+            U
           </div>
           <h2 className="font-semibold text-[16px] sm:text-[18px]">
-            CivicReport
+            Urban Care📍
           </h2>
         </div>
 

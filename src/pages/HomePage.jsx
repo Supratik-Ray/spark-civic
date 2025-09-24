@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FiUser,
   FiMenu,
@@ -43,15 +44,21 @@ const HomePage = () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 ">
-          <button className="text-white text-sm sm:text-base flex items-center justify-center py-3 px-8 sm:px-10 bg-blue-600 w-full rounded-[10px] hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer font-semibold">
+          <Link
+            to="/report"
+            className="text-white text-sm sm:text-base flex items-center justify-center py-3 px-8 sm:px-10 bg-blue-600 w-full rounded-[10px] hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer font-semibold"
+          >
             Report an Issue{" "}
             <span>
               <FiArrowRight />
             </span>
-          </button>
-          <button className="bg-white hover:bg-blue-100 hover:text-blue-600 transition-all duration-200 ease text-sm sm:text-base border-[1px] border-gray-200 py-3 px-8 sm:px-10 w-full rounded-[10px] cursor-pointer font-semibold">
-            View Dashboard
-          </button>
+          </Link>
+          <Link
+            to="/issues"
+            className="bg-white hover:bg-blue-100 hover:text-blue-600 transition-all duration-200 ease text-sm sm:text-base border-[1px] border-gray-200 py-3 px-8 sm:px-10 w-full rounded-[10px] cursor-pointer font-semibold"
+          >
+            View all Issues
+          </Link>
         </div>
       </article>
 
@@ -74,7 +81,7 @@ const HomePage = () => {
       {/* why choose */}
       <article className="py-12 sm:py-18 px-10 md:px-12 lg:px-24">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
-          Why Choose CivicReport?
+          Why Choose Urban Care?
         </h2>
         <p className="text-center text-gray-500 my-4 text-sm sm:text-base">
           Our platform bridges the gap between citizens and city services with
@@ -145,12 +152,15 @@ const HomePage = () => {
             Join thousands of citizens making their communities better, one
             issue at a time.
           </p>
-          <button className="bg-white flex items-center gap-3 sm:gap-5 text-sm sm:text-base font-semibold py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl hover:bg-blue-100 transition-all duration-200 ease cursor-pointer">
+          <Link
+            to="/issues"
+            className="bg-white flex items-center gap-3 sm:gap-5 text-sm sm:text-base font-semibold py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl hover:bg-blue-100 transition-all duration-200 ease cursor-pointer"
+          >
             Get Started Now{" "}
             <span>
               <FiArrowRight />
             </span>
-          </button>
+          </Link>
         </section>
       </article>
     </div>
